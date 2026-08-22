@@ -41,16 +41,32 @@ The clean installers use `database/sms2_schema.sql` and `modules/crad/database/c
 
 | Portal | Username | Password |
 | --- | --- | --- |
+| Super Admin | `superadmin` | `@superadmin123` |
+| System Admin | `admin` | `@admin123` |
 | Student | `s230000001` | `@student123` |
 | Adviser | `rsantos` | `@faculty123` |
 | Research Coordinator | `researchcoordinator` | `@research123` |
 | Research Director | `researchdirector` | `@faculty123` |
 | CRAD Officer | `cradofficer` | `@cradofficer123` |
+| Research Grant Officer | `researchgrant` | `@researchgrant123` |
+| Review Committee | `reviewcommitee` | `@review123` |
 | Grammarian | `grammarian` | `@grammarian123` |
 | Panel 1 | `jobert.valentino` | `@panel123` |
 | Panel 2 | `jonathan.estrada` | `@panel123` |
 | Panel 3 | `michelle.guevarra` | `@panel123` |
-| System Admin | `admin` | `@admin123` |
+| Finance | `finance` | `@finance123` |
+
+The login accepts either the username above or the account email. Copy the password exactly, including the leading `@`.
+
+### If imported accounts say “Incorrect password”
+
+From the project folder, run this once while XAMPP MySQL is started:
+
+```powershell
+C:\xampp\php\php.exe database\seed_accounts.php
+```
+
+This restores the classroom account passwords, clears login lockouts, and repairs their role permissions without deleting CRAD workflow records. Then refresh the login page and use the account table above.
 
 ## CRAD second-semester flow
 
