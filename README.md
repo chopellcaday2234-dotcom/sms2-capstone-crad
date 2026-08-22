@@ -4,20 +4,20 @@ This repository contains the SMS2 Capstone system with the completed CRAD first-
 
 ## Quick setup on XAMPP
 
-### Option A — transferred CRAD demo data (recommended for group testing)
+### Option A — transferred SMS2 + CRAD data (recommended for group testing)
 
 1. Download the repository through **Code → Download ZIP**, or clone it inside `C:\xampp\htdocs`.
 2. Start **Apache** and **MySQL** in XAMPP.
 3. Open phpMyAdmin and import these two files in this order:
 
-   1. `database/sms2_demo_database.sql`
-   2. `modules/crad/database/crad_demo_database.sql`
+   1. `database/sms2_db.sql`
+   2. `modules/crad/database/crad_db.sql`
 
    The files create and select the correct databases automatically: `sms2_db` and `crad_db`.
 4. Copy `config/local.example.php` to `config/local.php` only when the MySQL host, port, username, or password is different from the XAMPP defaults.
 5. Open `http://localhost/<project-folder>/` in a browser.
 
-Do not run the clean schema installers after importing the demo databases. The demo exports already contain the complete table structures and transferred records.
+Do not run the clean schema installers after importing these two databases. The transfer exports already contain the complete table structures, user accounts, roles, and sanitized CRAD records.
 
 ### Option B — clean database without transferred records
 
@@ -35,9 +35,9 @@ Do not run the clean schema installers after importing the demo databases. The d
 
 5. Open `http://localhost/<project-folder>/` in a browser.
 
-The clean installers use `database/sms2_schema.sql` and `modules/crad/database/crad_schema.sql`. The Option A exports include sanitized classroom/demo accounts and CRAD workflow records. Login/security logs, reset tokens, authenticators, passkeys, raw signatures, local database passwords, and uploaded manuscript files are intentionally excluded.
+The clean installers use `database/sms2_schema.sql` and `modules/crad/database/crad_schema.sql`. The Option A exports include sanitized classroom accounts and CRAD workflow records. Login/security logs, reset tokens, authenticators, passkeys, raw signatures, local database passwords, and uploaded manuscript files are intentionally excluded.
 
-## Main CRAD demo accounts
+## Main CRAD test accounts
 
 | Portal | Username | Password |
 | --- | --- | --- |
@@ -72,4 +72,4 @@ The completed state is **CAPSTONE ACADEMIC PROCESS COMPLETED**.
 - The seed scripts are for local development and classroom demonstration only. Change all seeded passwords before deploying the system anywhere public.
 - Keep `config/local.php` private.
 - Do not commit files inside `storage/uploads`, `storage/keys`, or `storage/backups`.
-- The repository contains source code and clean database schemas, not the current laptop's live database records.
+- The repository includes the sanitized `sms2_db.sql` and `crad_db.sql` transfer exports. Private security history, credentials, signature images, machine-specific paths, and uploaded document binaries remain excluded.
