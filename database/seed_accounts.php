@@ -22,6 +22,7 @@ echo "Ensuring roles..." . PHP_EOL;
 $roles = [
     ['superadmin', 'Super Admin', 'Full system access'],
     ['admin', 'Super Admin', 'Legacy super admin access'],
+    ['sms_admin', 'Admin', 'General administrator account'],
     ['admission', 'Admission', 'Admission office access'],
     ['registrar', 'Registrar', 'Enrollment, records, scheduling'],
     ['finance', 'Finance', 'Payments and receivables'],
@@ -30,10 +31,13 @@ $roles = [
     ['osa', 'OSA', 'Student affairs / co-curricular'],
     ['qa', 'QA Office', 'Accreditation and quality'],
     ['crad_officer', 'CRAD Officer', 'Research and development'],
+    ['research_grant', 'CRAD Officer', 'Research grant management access'],
     ['research_coordinator', 'Research Coordinator', 'Research coordination access'],
+    ['adviser', 'Adviser', 'Research adviser faculty account'],
     ['research_director', 'Research Director', 'Research defense scheduling director account'],
     ['grammarian', 'Grammarian', 'Research grammar and manuscript evaluation account'],
     ['panel', 'Panel Member', 'Research defense panel account'],
+    ['review_committee', 'Review Committee', 'Research review committee account'],
     ['student', 'Student', 'Student portal only'],
 ];
 
@@ -51,13 +55,17 @@ $pdo->exec('DELETE FROM role_permissions');
 
 $perms = [
     'superadmin'   => ['user-management', 'student_portal'],
+    'sms_admin'    => ['enrollment', 'registrar', 'curriculum', 'accreditation', 'payment', 'faculty', 'scheduling', 'cocurricular', 'lms', 'crad'],
     'admission'    => ['enrollment'],
     'registrar'    => ['registrar', 'curriculum', 'scheduling'],
     'crad_officer' => ['crad'],
+    'research_grant' => ['crad_grant'],
     'research_coordinator' => ['crad'],
+    'adviser'      => ['faculty'],
     'research_director' => ['faculty'],
     'grammarian'   => ['faculty'],
     'panel'        => ['faculty'],
+    'review_committee' => ['faculty'],
     'finance'      => ['payment'],
     'osa'          => ['cocurricular'],
     'it_office'    => ['lms'],
@@ -88,6 +96,14 @@ $accounts = [
         'student_id' => null,
     ],
     [
+        'username' => 'admin',
+        'email' => 'admin@bestlink.edu.ph',
+        'password' => '@admin123',
+        'full_name' => 'Admin',
+        'role_key' => 'sms_admin',
+        'student_id' => null,
+    ],
+    [
         'username' => 'admission',
         'email' => 'admission@bestlink.edu.ph',
         'password' => '@admission123',
@@ -112,6 +128,14 @@ $accounts = [
         'student_id' => null,
     ],
     [
+        'username' => 'researchgrant',
+        'email' => 'researchgrant@bestlink.edu.ph',
+        'password' => '@researchgrant123',
+        'full_name' => 'Research Grant',
+        'role_key' => 'research_grant',
+        'student_id' => null,
+    ],
+    [
         'username' => 'researchcoordinator',
         'email' => 'researchcoordinator@bestlink.edu.ph',
         'password' => '@research123',
@@ -128,11 +152,27 @@ $accounts = [
         'student_id' => null,
     ],
     [
+        'username' => 'rsantos',
+        'email' => 'rsantos@bestlink.edu.ph',
+        'password' => '@faculty123',
+        'full_name' => 'Dr. Roberto M. Santos',
+        'role_key' => 'adviser',
+        'student_id' => null,
+    ],
+    [
         'username' => 'grammarian',
         'email' => 'grammarian@bestlink.edu.ph',
         'password' => '@grammarian123',
         'full_name' => 'Grammarian',
         'role_key' => 'grammarian',
+        'student_id' => null,
+    ],
+    [
+        'username' => 'reviewcommitee',
+        'email' => 'reviewcommitee@bestlink.edu.ph',
+        'password' => '@review123',
+        'full_name' => 'Review Committee',
+        'role_key' => 'review_committee',
         'student_id' => null,
     ],
     [
@@ -236,13 +276,6 @@ foreach ($accounts as $a) {
         $a['student_id'],
     ]);
     echo "  ✓ {$a['username']} ({$a['role_key']})" . PHP_EOL;
-}
-
-// Clear legacy JSON overrides so DB is source of truth
-$permFile = ROOT_PATH . '/config/perm_overrides.json';
-if (is_file($permFile)) {
-    @unlink($permFile);
-    echo "Removed perm_overrides.json" . PHP_EOL;
 }
 
 $pdo->prepare(
