@@ -1,0 +1,22 @@
+# Machine-specific configuration and environment files
+/config/local.php
+/.env
+/.env.*
+!/.env.example
+
+# Live database exports contain accounts, logs, and research records.
+/database/sms2_db.sql
+/modules/crad/database/crad_db.sql
+/database/.installed
+
+# Runtime and private data
+/storage/runtime-tmp/
+/storage/logs/
+*.log
+
+# Editor and operating-system files
+/.idea/
+/.vscode/
+.DS_Store
+Thumbs.db
+
